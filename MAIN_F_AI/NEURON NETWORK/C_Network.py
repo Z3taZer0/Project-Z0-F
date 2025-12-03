@@ -23,8 +23,8 @@ def train(nn, X, y, lr=0.1, epochs=1000): # Fonction d'entraînement du réseau 
             output = nn.forward(inputs) # Calcul de la sortie du réseau
 
             # Erreur de la sortie
-            error = output - target # Calcul de l'erreur (fonction de perte MSE)
-            delta = error * (output * (1 - output))  # dérivée de la fonction sigmoïde pour la couche de sortie
+            
+            delta = output - target  # Utilisation de la dérivée de la fonction de perte Log Loss avec sigmoïde
 
             # Backprop couche par couche
             for i in reversed(range(len(nn.layers))): # Parcours des couches en sens inverse (Backpropagation)
