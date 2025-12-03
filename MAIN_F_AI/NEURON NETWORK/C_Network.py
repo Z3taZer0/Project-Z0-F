@@ -2,45 +2,47 @@ import numpy as np
 from C_Layer import Layer
 
 
-class NeuralNetwork:
-    def __init__(self, layers):
+class NeuralNetwork: # Definition de la classe NeuralNetwork, représentant un réseau de neurones composé de plusieurs couches
+    def __init__(self, layers): # Initialisation du réseau avec une liste de couches
         
-        self.layers = layers # Liste des couches du réseau
+        self.layers = layers # Liste des couches du réseau (que l'on stock pour permettre de parcourir chaque couche dans l'ordre)
 
-    def forward(self, inputs):
-        self.activations = [inputs]
-        output = inputs # Propagation avant à travers chaque couche
+    def forward(self, inputs): # Propagation avant à travers le réseau pour retourner la sortie
+        self.activations = [inputs] # Stocke les activations de chaque couche pour le backpropagation
+        output = inputs # Initialisation de la sortie avec les entrées (pour la première couche)
         for layer in self.layers:
-            output = layer.forward(output) # Mise à jour de la sortie à chaque couche
-            self.activations.append(output)
-        return output
+            output = layer.forward(output) # Mise à jour de la sortie à chaque couche pour la suivante
+            self.activations.append(output) # Stocke l'activation de la couche courante pour le backpropagation
+        return output # Retourne la sortie finale du réseau
     
-def train(nn, X, y, lr=0.1, epochs=1000):
-    for _ in range(epochs):
-        for inputs, target in zip(X, y):
+def train(nn, X, y, lr=0.1, epochs=1000): # Fonction d'entraînement du réseau de neurones (nn = NeuralNetwork)
+    for _ in range(epochs): # Boucle sur le nombre d'itérations d'entraînement (epochs)
+        for inputs, target in zip(X, y): # Boucle sur chaque paire d'entrée et de cible dans les données d'entraînement
 
             # Forward pass
-            output = nn.forward(inputs)
+            output = nn.forward(inputs) # Calcul de la sortie du réseau
 
             # Erreur de la sortie
-            error = output - target
-            delta = error * (output * (1 - output))  # dérivée de la fonction sigmoïde
+            error = output - target # Calcul de l'erreur (fonction de perte MSE)
+            delta = error * (output * (1 - output))  # dérivée de la fonction sigmoïde pour la couche de sortie
 
-             # Backprop couche par couche
-            for i in reversed(range(len(nn.layers))):
-                layer = nn.layers[i]
+            # Backprop couche par couche
+            for i in reversed(range(len(nn.layers))): # Parcours des couches en sens inverse (Backpropagation)
+                layer = nn.layers[i] # Récupération de la couche courante (pour faire dans l'ordre)
 
-                # Activation de la couche précédente
-                a_prev = nn.activations[i]      # shape = n_inputs
+                a_prev = nn.activations[i] # Récupération de l'activation de la couche précédente
                 
-                # gradients
-                grad_w = np.outer(delta, a_prev)
-                grad_b = delta
+                # Gradients
+                grad_w = np.outer(delta, a_prev) # Calcul du gradient des poids
+                grad_b = delta # Calcul du gradient des biais
 
-                # update
-                layer.weights -= lr * grad_w
-                layer.biases  -= lr * grad_b
+                # Mise à jour des poids et biais
+                layer.weights -= lr * grad_w # Mise à jour des poids
+                layer.biases  -= lr * grad_b # Mise à jour des biais
 
                 # delta pour la couche précédente (si pas input layer)
                 if i > 0:
-                    delta = (layer.weights.T @ delta) * (a_prev * (1 - a_prev))
+                    delta = (layer.weights.T @ delta) * (a_prev * (1 - a_prev)) # Calcul du delta pour la couche précédente
+                    
+                # En gros on propage l'erreur en arrière à travers le réseau en mettant à jour les poids et biais de chaque couche
+                # pour minimiser l'erreur globale du réseau.
