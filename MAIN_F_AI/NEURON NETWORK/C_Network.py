@@ -22,8 +22,7 @@ def train(nn, X, y, lr=0.1, epochs=1000): # Fonction d'entraînement du réseau 
             # Forward pass
             output = nn.forward(inputs) # Calcul de la sortie du réseau
 
-            # Erreur de la sortie
-            
+            # Erreur de la sortie 
             delta = output - target  # Utilisation de la dérivée de la fonction de perte Log Loss avec sigmoïde
 
             # Backprop couche par couche

@@ -9,7 +9,7 @@ X = np.array([
     [1.0, 0.5] #array 1
     ])
 
-y = np.array([1, 0])  # Valeurs cibles associées aux arrays d'entrée (0 OU 1)
+y = np.array([1, 0])  # Valeurs cibles associées aux arrays d'entrée (entre 0 et 1 pour sigmoïde)
 
 # Création du réseau de neurones avec 3 couches, chaque neurone represente une entree pour la couche suivante
 nn = NeuralNetwork([
