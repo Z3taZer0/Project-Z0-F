@@ -30,6 +30,7 @@ from train import train # Import de la fonction d'entraînement depuis le fichie
 
 train(neuron, X_train, y_train, lr=0.1, epochs=500)
 train(neuron2, X_train, y_train, lr=0.5, epochs=50000)
+
 # Vérification après entraînement
 
 print("Sortie du neurone après entraînement :", neuron.forward(X_train[0]))
