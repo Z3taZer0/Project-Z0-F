@@ -32,8 +32,7 @@ def train(nn, X, y, lr=0.1, epochs=1000):
 
                 # Activation de la couche précédente
                 a_prev = nn.activations[i]      # shape = n_inputs
-                a_curr = nn.activations[i+1]    # shape = n_neurons
-
+                
                 # gradients
                 grad_w = np.outer(delta, a_prev)
                 grad_b = delta
