@@ -40,7 +40,7 @@ def train(nn, X, y, lr=0.1, epochs=1000): # Fonction d'entraînement du réseau 
                 layer.weights -= lr * grad_w # Mise à jour des poids
                 layer.biases  -= lr * grad_b # Mise à jour des biais
 
-                # delta pour la couche précédente (si pas input layer)
+                # delta pour la couche précédente (si c'est pas la première couche (input layer))
                 if i > 0:
                     delta = (layer.weights.T @ delta) * (a_prev * (1 - a_prev)) # Calcul du delta pour la couche précédente
                     
