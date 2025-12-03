@@ -8,9 +8,11 @@ class NeuralNetwork:
         self.layers = layers # Liste des couches du réseau
 
     def forward(self, inputs):
+        self.activations = [inputs]
         output = inputs # Propagation avant à travers chaque couche
         for layer in self.layers:
             output = layer.forward(output) # Mise à jour de la sortie à chaque couche
+            self.activations.append(output)
         return output
     
 def train(nn, X, y, lr=0.1, epochs=1000):
@@ -22,19 +24,24 @@ def train(nn, X, y, lr=0.1, epochs=1000):
 
             # Erreur de la sortie
             error = output - target
-
-            # Backpropagation
             delta = error * (output * (1 - output))  # dérivée de la fonction sigmoïde
 
-            # On remonte couche par couche depuis la fin
-            for layer in reversed(nn.layers):
-                # gradient poids
-                grad_w = np.outer(delta, layer.last_input)
+             # Backprop couche par couche
+            for i in reversed(range(len(nn.layers))):
+                layer = nn.layers[i]
+
+                # Activation de la couche précédente
+                a_prev = nn.activations[i]      # shape = n_inputs
+                a_curr = nn.activations[i+1]    # shape = n_neurons
+
+                # gradients
+                grad_w = np.outer(delta, a_prev)
                 grad_b = delta
 
-                # mise à jour
+                # update
                 layer.weights -= lr * grad_w
-                layer.biases -= lr * grad_b
+                layer.biases  -= lr * grad_b
 
-                # calcul delta pour la couche précédente
-                delta = (layer.weights.T @ delta) * (layer.last_output * (1 - layer.last_output))
+                # delta pour la couche précédente (si pas input layer)
+                if i > 0:
+                    delta = (layer.weights.T @ delta) * (a_prev * (1 - a_prev))
