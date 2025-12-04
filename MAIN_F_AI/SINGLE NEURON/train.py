@@ -1,5 +1,4 @@
 import numpy as np
-from C_Neuron import NEURON
 
 def train(neuron, X, y, lr=0.1, epochs=1000): #epochs = nombre d'itérations d'entraînement, et lr = learning rate
     for _ in range(epochs):

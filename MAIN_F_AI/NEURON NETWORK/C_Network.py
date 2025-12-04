@@ -1,5 +1,4 @@
 import numpy as np
-from C_Layer import Layer
 
 
 class NeuralNetwork: # Definition de la classe NeuralNetwork, représentant un réseau de neurones composé de plusieurs couches
