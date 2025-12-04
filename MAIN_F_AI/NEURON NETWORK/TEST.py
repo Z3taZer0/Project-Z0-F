@@ -1,7 +1,6 @@
 import numpy as np
-from  C_Network import NeuralNetwork
+from C_Network import NeuralNetwork, train
 from C_Layer import Layer
-from C_Network import train
 
 # Exemple d'entrées pour entraîner le réseau de neurones :
 X = np.array([
