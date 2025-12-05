@@ -19,7 +19,10 @@ nn = NeuralNetwork([
     Layer(n_inputs=2, n_neurons=1)   # Couche de sortie avec 2 entrées et 1 neurone
 ])
 
-train(nn, X, y, lr=0.5, epochs=10000) # Entraînement du réseau de neurones
+load_network(nn, "network_data.npz")  # Chargement du réseau sauvegardé précédemment
+
+
+train(nn, X, y, lr=0.5, epochs=100000) # Entraînement du réseau de neurones
 
 print("Sortie du réseau de neurones après entraînement :", nn.forward(X[0])) # Test de la sortie du réseau après entraînement (array 0)
 print("Sortie du réseau de neurones après entraînement :", nn.forward(X[1])) # Test de la sortie du réseau après entraînement (array 1)
