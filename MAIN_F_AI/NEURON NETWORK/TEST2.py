@@ -26,3 +26,5 @@ train(nn, X, y, lr=0.5, epochs=10000)
 save_network(nn, "network_data2.npz")
 
 print("Sortie du réseau de neurones après entraînement :", nn.forward(X[0]))
+
+visualize_network(nn)
