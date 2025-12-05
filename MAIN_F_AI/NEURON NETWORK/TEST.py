@@ -22,7 +22,7 @@ nn = NeuralNetwork([
 load_network(nn, "network_data.npz")  # Chargement du réseau sauvegardé précédemment
 
 
-train(nn, X, y, lr=0.5, epochs=100000) # Entraînement du réseau de neurones
+train(nn, X, y, lr=0.5, epochs=1000000) # Entraînement du réseau de neurones
 
 print("Sortie du réseau de neurones après entraînement :", nn.forward(X[0])) # Test de la sortie du réseau après entraînement (array 0)
 print("Sortie du réseau de neurones après entraînement :", nn.forward(X[1])) # Test de la sortie du réseau après entraînement (array 1)
